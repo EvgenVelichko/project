@@ -1,8 +1,8 @@
 {
-  "name": "project",
+  "name": "majestik-law",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://evgenvelichko.github.io/project",
+  "homepage": "https://evgenvelichko.github.io/majestik-law",
   "type": "module",
   "scripts": {
     "predeploy": "npm run build",
