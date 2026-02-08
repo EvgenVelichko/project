@@ -1,16 +1,19 @@
-import { useState, useEffect } from 'react';
-import { supabase } from './lib/supabase';
-import { Article, Category } from './types/article';
-import { SearchBar } from './components/SearchBar';
-import { CategoryFilter } from './components/CategoryFilter';
-import { ArticleCard } from './components/ArticleCard';
-import { BookOpen, Loader2 } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { supabase } from "./lib/supabase";
+import { Article, Category } from "./types/article";
+import { SearchBar } from "./components/SearchBar";
+import { CategoryFilter } from "./components/CategoryFilter";
+import { ArticleCard } from "./components/ArticleCard";
+import { ScrollToTop } from "./components/ScrollToTop";
+import { BookOpen, Loader2 } from "lucide-react";
 
 function App() {
   const [articles, setArticles] = useState<Article[]>([]);
   const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<Category | 'Все'>('Все');
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<Category | "Все">(
+    "Все",
+  );
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -25,14 +28,14 @@ function App() {
     setLoading(true);
     try {
       const { data, error } = await supabase
-        .from('articles')
-        .select('*')
-        .order('article_number', { ascending: true });
+        .from("articles")
+        .select("*")
+        .order("article_number", { ascending: true });
 
       if (error) throw error;
       setArticles(data || []);
     } catch (error) {
-      console.error('Error fetching articles:', error);
+      console.error("Error fetching articles:", error);
     } finally {
       setLoading(false);
     }
@@ -41,8 +44,10 @@ function App() {
   const filterArticles = () => {
     let filtered = [...articles];
 
-    if (selectedCategory !== 'Все') {
-      filtered = filtered.filter((article) => article.category === selectedCategory);
+    if (selectedCategory !== "Все") {
+      filtered = filtered.filter(
+        (article) => article.category === selectedCategory,
+      );
     }
 
     if (searchQuery.trim()) {
@@ -53,7 +58,7 @@ function App() {
           article.title.toLowerCase().includes(query) ||
           article.content.toLowerCase().includes(query) ||
           article.punishment?.toLowerCase().includes(query) ||
-          article.chapter?.toLowerCase().includes(query)
+          article.chapter?.toLowerCase().includes(query),
       );
     }
 
@@ -72,7 +77,7 @@ function App() {
           </div>
           <p className="text-center text-gray-600 mt-2">
             База знаний законов штата Сан-Андреас <br />
-            by Evgeniy Brewer; Morgan Blackwood
+            by Evgeniy Brewer & Morgan Blackwood
           </p>
         </div>
       </header>
@@ -94,7 +99,10 @@ function App() {
           <>
             <div className="mb-6 text-center">
               <p className="text-gray-600">
-                Найдено статей: <span className="font-bold text-gray-900">{filteredArticles.length}</span>
+                Найдено статей:{" "}
+                <span className="font-bold text-gray-900">
+                  {filteredArticles.length}
+                </span>
               </p>
             </div>
 
@@ -115,7 +123,7 @@ function App() {
         )}
       </main>
 
-   
+      <ScrollToTop />
     </div>
   );
 }
