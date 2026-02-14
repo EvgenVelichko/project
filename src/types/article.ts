@@ -13,4 +13,4 @@ export interface Article {
   updated_at: string;
 }
 
-export type Category = 'УК' | 'ДК' | 'Душка адвокатов' | 'Процессуальные' | '10-Коды';
+export type Category = 'УК' | 'ДК' | 'Душка адвокатов' | 'Процессуальные' | '10-Коды' | 'Порядок Задержания';
